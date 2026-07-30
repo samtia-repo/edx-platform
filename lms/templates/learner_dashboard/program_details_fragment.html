@@ -1,0 +1,153 @@
+## mako
+
+<%page expression_filter="h"/>
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from openedx.core.djangolib.js_utils import (
+    dump_js_escaped_json, js_escaped_string
+)
+%>
+
+<style>
+  .program-details-wrapper {
+    width: min(1320px, calc(100% - 48px)) !important;
+    max-width: none !important;
+    margin: 42px auto 0 !important;
+  }
+
+  .program-details-wrapper .program-title {
+    color: #022c22 !important;
+    font-weight: 950 !important;
+  }
+
+  .program-details-wrapper .program-heading {
+    background: linear-gradient(135deg, #022c22 0%, #064e3b 58%, #047857 100%) !important;
+    border: 1px solid rgba(209,250,229,.35) !important;
+    box-shadow: none !important;
+  }
+
+  body .program-details-wrapper .program-heading h3.program-heading-title,
+  body .program-details-wrapper h3.program-heading-title,
+  body h3.program-heading-title {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 950 !important;
+  }
+
+  .program-details-wrapper .program-heading-message,
+  .program-details-wrapper .program-heading-message div {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
+  .program-details-wrapper .course-list-heading,
+  .program-details-wrapper .course-list-heading .status {
+    color: #022c22 !important;
+    font-weight: 950 !important;
+  }
+
+  .program-details-wrapper .course-list-heading .count {
+    background: #047857 !important;
+    color: #ffffff !important;
+    border-radius: 999px !important;
+    font-weight: 950 !important;
+    padding: 4px 10px !important;
+  }
+
+  .program-details-wrapper .program-course-card {
+    background: rgba(255,255,255,.92) !important;
+    border: 1px solid rgba(4,120,87,.18) !important;
+    border-left: 8px solid #064e3b !important;
+    box-shadow: none !important;
+  }
+
+  .program-details-wrapper .program-course-card *,
+  .program-details-wrapper .program-course-card .course-title,
+  .program-details-wrapper .program-course-card h5,
+  .program-details-wrapper .program-course-card .course-text {
+    color: #022c22 !important;
+  }
+
+  .program-details-wrapper .program-course-card .no-action-message,
+  .program-details-wrapper .program-course-card .course-enroll-view,
+  .program-details-wrapper .program-course-card .course-action-view {
+    color: #64748b !important;
+  }
+
+  .program-details-wrapper .program-course-card .course-enrollment-message,
+  .program-details-wrapper .program-course-card .course-enrollment-message * {
+    color: #64748b !important;
+  }
+
+  .program-details-wrapper .program-progress,
+  .program-details-wrapper .program-record,
+  .program-details-wrapper .program-sidebar .aside,
+  .program-details-wrapper .program-sidebar aside {
+    background: linear-gradient(135deg, #022c22 0%, #064e3b 58%, #047857 100%) !important;
+    border: 1px solid rgba(209,250,229,.35) !important;
+    box-shadow: none !important;
+  }
+
+  .program-details-wrapper .program-progress *,
+  .program-details-wrapper .program-record *,
+  .program-details-wrapper .program-sidebar .aside *,
+  .program-details-wrapper .program-sidebar aside * {
+    color: #ffffff !important;
+  }
+
+  .program-details-wrapper .program-sidebar svg,
+  .program-details-wrapper .program-sidebar svg * {
+    stroke: #d1fae5 !important;
+  }
+
+  .program-details-wrapper .program-sidebar svg text {
+    fill: #ffffff !important;
+  }
+
+  .program-details-wrapper .motivating-section {
+    background: rgba(255,255,255,.92) !important;
+    border: 1px solid rgba(4,120,87,.18) !important;
+    border-left: 8px solid #064e3b !important;
+    box-shadow: none !important;
+  }
+
+  .program-details-wrapper .motivating-section,
+  .program-details-wrapper .motivating-section *,
+  .program-details-wrapper .motivating-heading,
+  .program-details-wrapper .motivating-message {
+    color: #022c22 !important;
+  }
+
+  .program-details-wrapper .btn,
+  .program-details-wrapper .btn-brand,
+  .program-details-wrapper .cta-primary,
+  .program-details-wrapper .sidebar-button,
+  .program-details-wrapper .pathway-button,
+  .program-details-wrapper .complete-program {
+    background: #ffffff !important;
+    color: #022c22 !important;
+    border: 0 !important;
+    font-weight: 900 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+</style>
+
+<div class="js-program-details-wrapper program-details-wrapper"></div>
+
+<%block name="js_extra">
+<%static:webpack entry="ProgramDetailsFactory">
+ProgramDetailsFactory({
+    programData: ${program_data | n, dump_js_escaped_json},
+    courseData: ${course_data | n, dump_js_escaped_json},
+    certificateData: ${certificate_data | n, dump_js_escaped_json},
+    urls: ${urls | n, dump_js_escaped_json},
+    userPreferences: ${user_preferences | n, dump_js_escaped_json},
+    industryPathways: ${industry_pathways | n, dump_js_escaped_json},
+    creditPathways: ${credit_pathways | n, dump_js_escaped_json},
+    programTabViewEnabled: ${program_tab_view_enabled | n, dump_js_escaped_json},
+    discussionFragment: ${discussion_fragment, | n, dump_js_escaped_json},
+    live_fragment: ${live_fragment, | n, dump_js_escaped_json}
+});
+</%static:webpack>
+</%block>

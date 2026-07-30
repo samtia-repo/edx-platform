@@ -1,0 +1,56 @@
+<div class="text-section" style="background:rgba(255,255,255,.92);padding-left:18px;">
+    <h3 id="program-<%- uuid %>" class="title hd-3" style="color:#022c22;font-weight:900;"><%- gettext(title) %></h3>
+    <div class="meta-info grid-container">
+        <div class="organization col" style="color:#022c22;font-weight:800;"><%- orgList %></div>
+        <div class="category col col-last">
+            <span class="category-text" style="color:#022c22;font-weight:800;"><%- gettext(type) %></span>
+            <span class="category-icon <%- type.toLowerCase() %>-icon" aria-hidden="true"></span>
+        </div>
+    </div>
+</div>
+
+<% if (progress) { %>
+    <div class="status-text" style="background:rgba(255,255,255,.92);">
+        <div class="number-status" style="background:#fff;border:1px solid rgba(4,120,87,.16);border-radius:14px;box-shadow:none;color:#022c22;">
+            <div class="number-circle completed" style="color:#047857;font-weight:950;"><%- progress.completed %></div>
+            <span class="sr-only"><%- ngettext('Course', 'Courses', progress.completed) %></span>
+            <span style="color:#022c22;"><%- gettext('Completed') %></span>
+        </div>
+
+        <div class="number-status" style="background:#fff;border:1px solid rgba(4,120,87,.16);border-radius:14px;box-shadow:none;color:#022c22;">
+            <div class="number-circle enrolled" style="color:#047857;font-weight:950;"><%- progress.in_progress %></div>
+            <span class="sr-only"><%- ngettext('Course', 'Courses', progress.in_progress) %></span>
+            <span style="color:#022c22;"><%- gettext('In Progress') %></span>
+        </div>
+
+        <div class="number-status" style="background:#fff;border:1px solid rgba(4,120,87,.16);border-radius:14px;box-shadow:none;color:#022c22;">
+            <div class="number-circle not-enrolled" style="color:#047857;font-weight:950;"><%- progress.not_started %></div>
+            <span class="sr-only"><%- ngettext('Course', 'Courses', progress.not_started) %></span>
+            <span style="color:#022c22;"><%- gettext('Remaining') %></span>
+        </div>
+    </div>
+<% } %>
+
+<% if (progress) { %>
+    <div class="progress-container" style="background:rgba(255,255,255,.92);">
+      <div class="progress-bar">
+        <% _.times(progress.completed, function() { %><div class="item completed"></div><% }) %>
+        <% _.times(progress.in_progress, function() { %><div class="item enrolled"></div><% }) %>
+        <% _.times(progress.not_started, function() { %><div class="item not-enrolled"></div><% }) %>
+      </div>
+    </div>
+<% } %>
+
+<a href="<%- detailUrl %>" class="card-link">
+    <div class="banner-image-container">
+        <picture>
+            <source srcset="<%- xsmallBannerUrl %>" media="(max-width: <%- breakpoints.max.xsmall %>)">
+            <source srcset="<%- smallBannerUrl %>" media="(max-width: <%- breakpoints.max.small %>)">
+            <source srcset="<%- mediumBannerUrl %>" media="(max-width: <%- breakpoints.max.medium %>)">
+            <source srcset="<%- xsmallBannerUrl %>" media="(max-width: <%- breakpoints.max.large %>)">
+            <img class="banner-image" srcset="<%- smallBannerUrl %>" src="/theming/asset/images/no_course_image.png" alt="<%- interpolate(gettext('%(programName)s Home Page.'), {programName: title}, true)%>">
+        </picture>
+    </div>
+</a>
+
+<div style="height:8px;background:#064e3b;width:100%;display:block;order:999;flex:0 0 8px;"></div>

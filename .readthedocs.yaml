@@ -1,0 +1,19 @@
+version: 2
+
+build:
+  os: "ubuntu-lts-latest"
+  tools:
+    python: "3.11"
+
+sphinx:
+  configuration: docs/conf.py
+
+python:
+  install:
+    # Need to install this to set the correct version of setuptools for now
+    # because it is needed by fs
+    # See https://github.com/openedx/openedx-platform/issues/38068 for details.
+  - requirements: "requirements/pip.txt"
+  - requirements: "requirements/edx/doc.txt"
+  - method: pip
+    path: .

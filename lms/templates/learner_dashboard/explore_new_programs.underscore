@@ -1,0 +1,9 @@
+<div style="background:rgba(255,255,255,.92);border:1px solid rgba(4,120,87,.18);border-bottom:8px solid #064e3b;border-radius:18px;padding:26px 28px;">
+    <p class="advertise-message" style="color:#022c22;font-weight:800;margin-bottom:18px;">
+        <%- gettext('Browse recently launched courses and see what\'s new in your favorite subjects') %>
+    </p>
+    <a href="<%- marketingUrl %>" class="btn-brand btn cta-primary view-button align-self-stretch" style="background:linear-gradient(135deg,#022c22 0%,#064e3b 58%,#047857 100%);color:#fff;border:0;font-weight:900;text-shadow:none;box-shadow:none;">
+        <span class="icon fa fa-search" aria-hidden="true" style="color:#fff;"></span>
+        <span style="color:#fff;"><%- gettext('Explore new programs') %></span>
+    </a>
+</div>

@@ -1,0 +1,170 @@
+## mako
+
+<%page expression_filter="h"/>
+
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from openedx.core.djangolib.js_utils import (
+    dump_js_escaped_json, js_escaped_string
+)
+%>
+
+<style>
+  .program-list-wrapper.container {
+    width: min(1320px, calc(100% - 48px)) !important;
+    max-width: none !important;
+    margin: 42px auto 72px !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .program-list-container {
+    background: transparent !important;
+  }
+
+  .js-program-list-header h2 {
+    color: #022c22 !important;
+    font-weight: 950 !important;
+  }
+
+  .program-card {
+    background: rgba(255,255,255,.92) !important;
+    border: 1px solid rgba(4,120,87,.18) !important;
+    border-left: 8px solid #064e3b !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  .program-card .text-section,
+  .program-card .status-text,
+  .program-card .progress-container {
+    background: transparent !important;
+  }
+
+  .program-card .title {
+    color: #022c22 !important;
+    font-weight: 900 !important;
+  }
+
+  .program-card .organization,
+  .program-card .category-text {
+    color: #022c22 !important;
+    font-weight: 800 !important;
+  }
+
+  .program-card .number-status {
+    background: #ffffff !important;
+    color: #022c22 !important;
+    border: 1px solid rgba(4,120,87,.14) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+  }
+
+  .program-card .number-status,
+  .program-card .number-status * {
+    color: #022c22 !important;
+  }
+
+  .program-card .number-circle {
+    background: transparent !important;
+    color: #047857 !important;
+    font-weight: 950 !important;
+  }
+
+  .program-card .progress-bar {
+    background: transparent !important;
+  }
+
+  .program-card .progress-bar .item {
+    background: rgba(4,120,87,.20) !important;
+  }
+
+  .program-card .progress-bar .completed,
+  .program-card .progress-bar .enrolled {
+    background: #047857 !important;
+  }
+
+  .sidebar {
+    background: rgba(255,255,255,.72) !important;
+    border: 1px solid rgba(4,120,87,.14) !important;
+    box-shadow: none !important;
+  }
+
+  .program-advertise .advertise-message {
+    color: #022c22 !important;
+    font-weight: 800 !important;
+  }
+
+  .program-advertise .view-button,
+  .sidebar .view-button,
+  .sidebar .btn,
+  .program-advertise .btn-brand,
+  .program-advertise .cta-primary {
+    background: linear-gradient(135deg, #022c22 0%, #064e3b 58%, #047857 100%) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    font-weight: 900 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .program-advertise .view-button *,
+  .sidebar .view-button *,
+  .sidebar .btn *,
+  .program-advertise .btn-brand *,
+  .program-advertise .cta-primary * {
+    color: #ffffff !important;
+  }
+
+  .empty-programs-message,
+  .program-cards-container > section {
+    background: rgba(255,255,255,.92) !important;
+    border: 1px solid rgba(4,120,87,.18) !important;
+    border-left: 8px solid #064e3b !important;
+    box-shadow: none !important;
+  }
+
+  .empty-programs-message h2,
+  .program-cards-container > section h2 {
+    color: #022c22 !important;
+  }
+
+  .empty-programs-message .btn,
+  .program-cards-container > section .btn {
+    background: linear-gradient(135deg, #022c22 0%, #064e3b 58%, #047857 100%) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    font-weight: 900 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+</style>
+
+% if mobile_only:
+<div class="program-list-wrapper container">
+    <div class="program-list-container">
+        <div class="program-cards-container"></div>
+    </div>
+    <div class="sidebar"></div>
+</div>
+% else:
+<div class="program-list-wrapper container">
+    <div class="program-list-container">
+        <div class="js-program-list-header"></div>
+        <div class="program-cards-container"></div>
+    </div>
+    <div class="sidebar"></div>
+</div>
+% endif
+
+<%block name="js_extra">
+<%static:webpack entry="ProgramListFactory">
+ProgramListFactory({
+    marketingUrl: '${marketing_url | n, js_escaped_string}',
+    programsData: ${programs | n, dump_js_escaped_json},
+    userProgress: ${progress | n, dump_js_escaped_json},
+    userPreferences: ${user_preferences | n, dump_js_escaped_json},
+    mobileOnly: ${mobile_only | n, dump_js_escaped_json}
+});
+</%static:webpack>
+</%block>
